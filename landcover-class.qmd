@@ -80,7 +80,7 @@ All of the data used in this study were accessed on November 25th, 2024.
 
 ### 1. Set up
 
-To train our classification algorithm and plot the results, we’ll use the rpart and rpart.plot packages.
+To train our classification algorithm and plot the results, I will use the rpart and rpart.plot packages.
 
 
 ```{r}
@@ -106,10 +106,9 @@ library(tmap) # map making
 
 Let’s create a raster stack. Each file name ends with the band number (e.g. B1.tif).
 
-- Notice that we are missing a file for band 6
-- Band 6 corresponds to thermal data, which we will not be working with for this lab
+*I am missing a file for band 6, but, this is intentional. Band 6 corresponds to thermal data, which I will not be working with during this exercise.*
 
-To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the terra::rast() function. We’ll then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.
+To create a raster stack, I will create a list of the files that I would like to work with and read them all in at once using the terra::rast() function. I will then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.
 
 ```{r}
 # list files for each band, including the full file path
@@ -127,7 +126,7 @@ plotRGB(landsat, r = 3, g = 2, b = 1, stretch = "lin")
 
 ### 3. Load study area
 
-We want to constrain our analysis to the southern portion of the county where we have training data, so we’ll read in a file that defines the area we would like to study.
+I want to constrain our analysis to the southern portion of the county where we have training data, so I’ll read in a file that defines the area I would like to study.
 
 ```{r}
 # read in shapefile for southern portion of SB county
@@ -141,7 +140,7 @@ tm_shape(SB_county_south) +
 
 ### 4. Crop and mask Landsat data to study area
 
-Now, we can crop and mask the Landsat data to our study area.
+Now, I can crop and mask the Landsat data to the study area.
 
 - **Why?** This reduces the amount of data we’ll be working with and therefore saves computational time
 - **Bonus:** We can also remove any objects we’re no longer working with to save space
@@ -162,9 +161,9 @@ plotRGB(landsat_masked, r = 3, g = 2, b = 1, stretch = "lin")
 
 ### 5. Convert Landsat values to reflectance
 
-Now we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any scaling factors to convert to reflectance.
+Now I need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any scaling factors to convert to reflectance.
 
-In this case, we are working with Landsat Collection 2.
+In this case, I are working with Landsat Collection 2.
 
 The valid range of pixel values for this collection goes from 7,273 to 43,636…
 - with a multiplicative scale factor of 0.0000275
@@ -234,7 +233,7 @@ SB_decision_tree <- rpart(formula = SB_formula,
                           na.action = na.omit)
 ```
 
-To understand how our decision tree will classify pixels, we can plot the results!
+To understand how the decision tree will classify pixels, I can plot the results!
 
 ```{r}
 # plot decision tree
@@ -244,7 +243,7 @@ prp(SB_decision_tree)
 
 ### 7. Classify image
 
-Now that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.
+Now that I have a rule set for classifying spectral reflectance values into landcover types, I can apply the classifier to identify the landcover type in each pixel.
 
 The terra package includes a predict() function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The predict() function will return a raster layer with integer values. These integer values correspond to the factor levels in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data.
 
@@ -258,7 +257,7 @@ levels(SB_training_data$type)
 
 ### 8. Plot results
 
-Now we can plot the results and check out our land cover map!
+Finally, I can plot the results and check out our land cover map!
 
 
 ```{r}
@@ -275,10 +274,19 @@ tm_shape(SB_classification) +
   
 ```
 
-## Conclusion: 
+## Conclusion:
 
+Working with Landsat data is fun! And it allows us to run analysis regarding landcover types, with the magic of R.
 
+## Acknowledements: 
 
+Material for this exercise was taken from Ruth Oliver's EDS 223: Geospatial Analysis Course at the University of Santa Barbara's Masters of Environmental Data Science program. Thank you, Ruth! 
+
+## Citations:
+
+R. Oliver, EDS 223 - Geospatial Analysis and Remote Sensing, Course Notes. 2024. [Online]. Available: https://eds-223-geospatial.github.io/
+
+U.S. Geological Survey. (n.d.). Landsat 5. Retrieved December 7, 2024, from https://www.usgs.gov/landsat-missions/landsat-5
 
 
 
