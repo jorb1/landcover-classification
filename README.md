@@ -4,7 +4,7 @@ https://github.com/jorb1
 
 In this analysis, I am using a form of supervised classification – a decision tree classifier. I will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types.
 
-![SB Coast Pic](https://amaryroad.com/wp-content/uploads/2020/06/santa-barbara-1024x640.jpeg
+![SB Coast Pic](https://amaryroad.com/wp-content/uploads/2020/06/santa-barbara-1024x640.jpeg)
 
 ## Data
 
